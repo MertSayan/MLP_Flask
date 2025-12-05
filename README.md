@@ -105,6 +105,12 @@ gibi bilgileri forma girer → “Tahmin Et” butonuna basar → modelden gelen
 
 Arayüz tamamen Türkçedir.
 
+<img width="812" height="667" alt="image" src="https://github.com/user-attachments/assets/e66462ab-16d2-40e5-b909-2b23b971317d" />
+(Arayüz görseli)
+
+<img width="618" height="661" alt="image" src="https://github.com/user-attachments/assets/b6d94ca6-b820-4a7d-a4c0-52209ce18b28" />
+(Veriler girildikten sonra tahmini maas görseli)
+
 
 ▶️ Uygulamayı Çalıştırmak İçin
 
