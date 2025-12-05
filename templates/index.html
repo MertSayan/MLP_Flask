@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Maaş Tahmini</title>
+    <style>
+        body { 
+            font-family: Arial; 
+            background-color: #f5f5f5; 
+            text-align: center; 
+            padding: 40px; 
+        }
+        .container {
+            background: white; 
+            padding: 20px; 
+            width: 420px; 
+            margin: auto; 
+            border-radius: 10px; 
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input, select { 
+            width: 90%; 
+            padding: 8px; 
+            margin: 10px 0; 
+        }
+        button {
+            padding: 10px 20px; 
+            background-color: green; 
+            color: white; 
+            border: none; 
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Maaş Tahmini</h1>
+
+    <div class="container">
+        <form action="/predict" method="POST">
+
+            <input type="number" name="years_exp" step="0.1" placeholder="Deneyim Yılı" required>
+            <input type="number" name="num_projects" placeholder="Tamamlanan Proje Sayısı" required>
+            <input type="number" name="prog_langs" placeholder="Bildiği Programlama Dili Sayısı" required>
+            
+            <select name="remote">
+                <option value="0">Çalışma Şekli: Ofis</option>
+                <option value="1">Çalışma Şekli: Uzaktan</option>
+            </select>
+
+            <input type="number" name="certs" placeholder="Sertifika Sayısı" required>
+
+            <select name="city_level" required>
+                <option value="1">1. Seviye - Büyükşehir (İstanbul, Ankara, İzmir)</option>
+                <option value="2">2. Seviye - Gelişmiş Şehir (Antalya, Bursa, Kocaeli vb.)</option>
+                <option value="3">3. Seviye - Diğer Şehirler</option>
+            </select>
+
+            <select name="lisans">
+                <option value="0">Mezuniyet: Lisans Değil</option>
+                <option value="1">Mezuniyet: Lisans</option>
+            </select>
+
+            <button type="submit">Tahmin Et</button>
+        </form>
+
+        {% if prediction %}
+            <h2>Tahmini Maaş: {{ prediction }} TL</h2>
+        {% endif %}
+    </div>
+
+</body>
+</html>
