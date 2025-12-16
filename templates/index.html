@@ -1,70 +1,153 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
-    <title>Maaş Tahmini</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maaş Tahmin Sistemi</title>
     <style>
-        body { 
-            font-family: Arial; 
-            background-color: #f5f5f5; 
-            text-align: center; 
-            padding: 40px; 
+        /* Genel Sayfa Ayarları */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Arka plan resmini static klasöründen çekiyoruz */
+            background: url("{{ url_for('static', filename='yazilimgorsel.jpg') }}") no-repeat center center fixed; 
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center; /* Yatay ortalama */
+            align-items: center;     /* Dikey ortalama */
         }
+
+        /* Resmin üzerine koyu bir filtre atıyoruz ki yazılar okunsun */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* %50 siyahlık */
+            z-index: -1;
+        }
+
+        /* Beyaz Kutu (Form Alanı) */
         .container {
-            background: white; 
-            padding: 20px; 
-            width: 420px; 
-            margin: auto; 
-            border-radius: 10px; 
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.95); /* Hafif şeffaf beyaz */
+            padding: 40px;
+            width: 100%;
+            max-width: 450px; /* Çok geniş olmasını engeller */
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3); /* Gölge efekti */
+            text-align: center;
         }
-        input, select { 
-            width: 90%; 
-            padding: 8px; 
-            margin: 10px 0; 
+
+        h1 {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 24px;
+            font-weight: 600;
         }
+
+        /* Form Elemanları Tasarımı */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Elemanlar arası boşluk */
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            box-sizing: border-box; /* Padding taşmasını engeller */
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #4CAF50; /* Tıklanınca yeşil çerçeve */
+            background-color: #f9f9f9;
+        }
+
+        /* Buton Tasarımı */
         button {
-            padding: 10px 20px; 
-            background-color: green; 
-            color: white; 
-            border: none; 
-            border-radius: 5px;
+            padding: 14px;
+            background-color: #28a745; /* Modern yeşil */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        button:active {
+            transform: scale(0.98); /* Basılma efekti */
+        }
+
+        /* Sonuç Alanı */
+        .result-box {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            border-radius: 8px;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-    <h1>Maaş Tahmini</h1>
-
     <div class="container">
-        <form action="/predict" method="POST">
+        <h1>Yazılımcı Maaş Tahmin Uygulaması</h1>
 
-            <input type="number" name="years_exp" step="0.1" placeholder="Deneyim Yılı" required>
+        <form action="/predict" method="POST">
+            <input type="number" name="years_exp" step="0.1" placeholder="Deneyim Yılı (Örn: 3.5)" required>
+            
             <input type="number" name="num_projects" placeholder="Tamamlanan Proje Sayısı" required>
-            <input type="number" name="prog_langs" placeholder="Bildiği Programlama Dili Sayısı" required>
+            
+            <input type="number" name="prog_langs" placeholder="Bilinen Programlama Dili Sayısı" required>
             
             <select name="remote">
-                <option value="0">Çalışma Şekli: Ofis</option>
-                <option value="1">Çalışma Şekli: Uzaktan</option>
+                <option value="" disabled selected>Çalışma Şekli Seçiniz</option>
+                <option value="0">🏢 Ofis</option>
+                <option value="1">🏠 Uzaktan (Remote)</option>
             </select>
 
-            <input type="number" name="certs" placeholder="Sertifika Sayısı" required>
+            <input type="number" name="certs" placeholder="Sahip Olunan Sertifika Sayısı" required>
 
             <select name="city_level" required>
-                <option value="1">1. Seviye - Büyükşehir (İstanbul, Ankara, İzmir)</option>
-                <option value="2">2. Seviye - Gelişmiş Şehir (Antalya, Bursa, Kocaeli vb.)</option>
-                <option value="3">3. Seviye - Diğer Şehirler</option>
+                <option value="" disabled selected>Şehir Seçimi </option>
+                <option value="1">🏙️ 1. Seviye (İstanbul, Ankara, İzmir)</option>
+                <option value="2">🏢 2. Seviye (Balıkesir, Bursa vb.)</option>
+                <option value="3">🏘️ 3. Seviye (Diğer Şehirler)</option>
             </select>
 
             <select name="lisans">
-                <option value="0">Mezuniyet: Lisans Değil</option>
-                <option value="1">Mezuniyet: Lisans</option>
+                <option value="" disabled selected>Eğitim Durumu</option>
+                <option value="0">🎓 Lisans Değil</option>
+                <option value="1">🎓 Lisans Mezunu</option>
             </select>
 
             <button type="submit">Tahmin Et</button>
         </form>
 
         {% if prediction %}
-            <h2>Tahmini Maaş: {{ prediction }} TL</h2>
+            <div class="result-box">
+                <h2>Tahmini Maaş:<br> {{ prediction }} TL</h2>
+            </div>
         {% endif %}
     </div>
 
