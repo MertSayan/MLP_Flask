@@ -6,11 +6,18 @@ Flask tabanlı web arayüzü ile sunulmuş halidir.
 Proje, Makine Öğrenmesi dersinin dönem ödevi kapsamında hazırlanmıştır.
 
 📂 Proje İçeriği
-Bu repository aşağıdaki dosya ve klasörleri içerir:
-├── app.py                 → Flask web uygulaması
-├── salary_model.pkl       → Eğitilmiş ML modeli (pickle formatında)
-└── templates/
-       └── index.html      → Web arayüzü (kullanıcı formu + sonuç ekranı)
+SalaryPredictionApp/
+├── static/
+│   └── yazilimgorsel.jpg        # Arka plan görseli
+├── templates/
+│   └── index.html              # Web arayüzü (kullanıcı formu + sonuç ekranı)
+├── app.py                      # Flask web uygulaması
+├── salary_model.pkl            # Eğitilmiş ML modeli (pickle formatında)
+└── README.md                   # Proje açıklaması
+
+🖼 Proje Önizlemesi
+
+<img width="1891" height="944" alt="image" src="https://github.com/user-attachments/assets/9b08b203-a8b9-4999-a83f-ec0b35f43fe5" />
 
 
 🎯 Projenin Amacı
@@ -93,26 +100,23 @@ Deneyim yılı
 
 Proje sayısı
 
-Programlama dilleri
+Bildiği proglamlama dili sayısı
 
-Sertifikalar
+Sertifika sayısı
 
-Şehir seviyesi
+Şehir seviyesi (İstanbul-Ankara gibi şehirler mi, Balıkesir vb. gibi şehirler mi yoksa Erzurum vb. gibi şehirler mi seçeneği)
 
-Mezuniyet durumu
+Mezuniyet durumu (Lisans mezunu / Lisans Mezunu Değil)
 
 gibi bilgileri forma girer → “Tahmin Et” butonuna basar → modelden gelen maaş tahmini ekranda gösterilir.
 
 Arayüz tamamen Türkçedir.
 
-<img width="812" height="667" alt="image" src="https://github.com/user-attachments/assets/e66462ab-16d2-40e5-b909-2b23b971317d" />
-(Arayüz görseli)
-
-<img width="618" height="661" alt="image" src="https://github.com/user-attachments/assets/b6d94ca6-b820-4a7d-a4c0-52209ce18b28" />
-(Veriler girildikten sonra tahmini maas görseli)
-
+<img width="1896" height="947" alt="image" src="https://github.com/user-attachments/assets/d5a2acb2-ef54-4bcc-b496-6417d7f72735" />
 
 ▶️ Uygulamayı Çalıştırmak İçin
+
+Sol üstten view kısmından terminal e basarak terminal açılır ve 
 
 Terminale:
 
@@ -123,6 +127,7 @@ python app.py yazılmalıdır ardından tarayıcıdan http://127.0.0.1:5000 adre
 
 Ad Soyad: Muhammed Mert Sayan
 Ders: Makine Öğrenmesi
+Numarası: 2212721028
 
 🧾 Lisans
 Bu proje akademik amaçla hazırlanmıştır.
